@@ -23,7 +23,7 @@ function readFile(filename) {
   });
 }
 
-function getPresentersFromGoogleSheet(auth, res) {
+function getPresentersFromGoogleSheet(auth, resolve) {
   // var Slack = require('slack-node');
   // webhookUri =
   //   'https://hooks.slack.com/services/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';
@@ -47,7 +47,6 @@ function getPresentersFromGoogleSheet(auth, res) {
       if (rows.length == 0) {
         console.log('No data found.');
       } else {
-        // let output_text = '';
         const output_array = [];
         for (var i = 0; i < rows.length; i++) {
           var row = rows[i];
@@ -77,9 +76,10 @@ function getPresentersFromGoogleSheet(auth, res) {
 
         console.log(JSON.stringify(output_array));
         console.log(JSON.stringify(newArray));
-        output_text = JSON.stringify(newArray);
+        resolve(newArray);
+        // res.json(newArray);
 
-        res.json(newArray);
+        // const output_text = JSON.stringify(newArray);
         // slack.webhook(
         //   {
         //     channel: '#labseminar',
@@ -97,12 +97,17 @@ function getPresentersFromGoogleSheet(auth, res) {
 
 function next_presenters(req, res) {
   var period = req.swagger.params.period.value || 1;
+  get_presenters(period).then(function(presenter_info) {
+    res.json(presenter_info);
+  });
+}
 
+function get_presenters(period) {
   let p1 = readFile('config/client_secret.json');
   let p2 = readFile(TOKEN_PATH);
   let p3 = Promise.all([p1, p2]);
 
-  p3
+  let p4 = p3
     .then(function(values) {
       let credentials = JSON.parse(values[0]);
       let token = JSON.parse(values[1]);
@@ -119,8 +124,11 @@ function next_presenters(req, res) {
       return oauth2Client;
     })
     .then(function(oauth2Client) {
-      return getPresentersFromGoogleSheet(oauth2Client, res);
+      return new Promise(function(resolve, reject) {
+        getPresentersFromGoogleSheet(oauth2Client, resolve);
+      });
     });
+  return p4;
 }
 
 module.exports = {
