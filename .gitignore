@@ -1,3 +1,6 @@
+# ETC
+config/client_secret.json
+
 # IDE files
 .idea
 

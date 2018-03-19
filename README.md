@@ -1,8 +1,12 @@
-# Skeleton project for Swagger
+# Notify lab seminar presenters to Slack regularly
 
-Add `client_secret.json` to `config` folder.
+## How to install
 
-Design REST API documentation: `swagger project edit`
-Start REST service: `swagger project start`
-See REST documentation: `http://localhost:10010/docs/`
-Run scheduler: `node scheduler.js`
+* Add `client_secret.json` to `config` folder.
+
+## How to run
+
+* Design REST API documentation: `swagger project edit`
+* Start REST service: `swagger project start`
+* See REST documentation: `http://localhost:10010/docs/`
+* Run scheduler: `node scheduler.js`
