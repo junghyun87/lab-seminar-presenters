@@ -40,7 +40,7 @@ function slack_notice(req, res) {
       slack.webhook(
         {
           channel: '#labseminar',
-          username: 'webhookbot',
+          username: 'lab-seminar-bot',
           text: output_text,
         },
         function(err, response) {
