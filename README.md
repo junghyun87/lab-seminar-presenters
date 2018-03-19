@@ -17,3 +17,6 @@
 * Start REST service: `swagger project start`
 * See REST documentation: `http://localhost:10010/docs/`
 * How to open port in Ubuntu: http://server-engineer.tistory.com/418
+* tmux
+  * `tmux new -s presenter-service`
+  * `tmux attach -t presenter-service`
